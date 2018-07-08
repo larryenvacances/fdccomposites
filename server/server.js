@@ -50,6 +50,8 @@ if (process.env.NODE_ENV === 'production') {
 /* Express app ROUTING */
 app.use('/auth', require('./auth'))
 
+app.use('/parts', require('./parts'))
+
 // ====== Error handler ====
 app.use(function(err, req, res, next) {
 	console.log('====== ERROR =======')
