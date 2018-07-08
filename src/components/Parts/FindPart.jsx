@@ -1,13 +1,20 @@
-import React from 'react'
+import React, {Component} from 'react'
 // TODO - add proptypes
 
-const FindPart = props => {
-		return (
-		<div>
-			<input type='text' name='pieceName' />
-      <button title='rechercher' name='rechercher'>rechercher</button>
-		</div>
-	)
+
+class FindPart extends Component {
+  getPartHistory () {
+    console.log('get request to /part/history');
+  }
+
+  render() {
+    return  (
+      <div>
+        <input type='text' name='partName' />
+        <button title='rechercher' name='rechercher' onClick={this.getPartHistory}>rechercher</button>
+      </div>
+    )
+  }
 }
 
 export default FindPart
