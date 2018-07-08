@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
 import './App.css'
 import LoginForm from './components/Login/LoginForm'
-import SignupForm from './components/SignupForm'
 import Header from './components/Header'
 import Home from './components/Home'
 
@@ -37,11 +36,6 @@ const DisplayLinks = props => {
 					<li className="nav-item">
 						<Link to="/login" className="nav-link">
 							login
-						</Link>
-					</li>
-					<li className="nav-item">
-						<Link to="/signup" className="nav-link">
-							sign up
 						</Link>
 					</li>
 				</ul>
@@ -128,8 +122,6 @@ class App extends Component {
 							_login={this._login}
 						/>}
 				/>
-				<Route exact path="/signup" component={SignupForm} />
-				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)
 	}
