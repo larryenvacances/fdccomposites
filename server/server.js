@@ -47,6 +47,8 @@ if (process.env.NODE_ENV === 'production') {
 	})
 }
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
 /* Express app ROUTING */
 app.use('/auth', require('./auth'))
 

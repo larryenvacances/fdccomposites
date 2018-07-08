@@ -9,14 +9,14 @@ class AddPart extends Component {
 
     this.state = {
       options: [],
-      selectedOption: ''
+      partFullName: ''
     }
   }
 
-  handleChange = (selectedOption) => {
-    // selectedOption can be null when the `x` (close) button is clicked
-    if (selectedOption) {
-      this.setState({ selectedOption:  selectedOption.target.value });
+  handleChange = (partFullName) => {
+    // partFullName can be null when the `x` (close) button is clicked
+    if (partFullName) {
+      this.setState({ partFullName:  partFullName.target.value });
     }
   }
 
@@ -26,13 +26,21 @@ class AddPart extends Component {
       partModels = response.data.partModels;
       this.setState({
         options: partModels,
-        selectedOption: partModels[0].name
+        partFullName: partModels[0].name
       });
     });
   }
 
   addPart() {
-    console.log('posting to parts/add');
+    axios.post('/parts/add?partModelName=' + this.state.partFullName)
+      .then(function (response) {
+          //handle success
+          console.log(response);
+      })
+      .catch(function (response) {
+          //handle error
+          console.log(response);
+      });
   }
 
   render() {
@@ -50,10 +58,10 @@ class AddPart extends Component {
             </FormControl>
           <FormGroup>
             <ControlLabel># de série :</ControlLabel>{' '}
-            <FormControl type="text" placeholder="" value={this.state.selectedOption} />
+            <FormControl type="text" placeholder="" value={this.state.partFullName} />
           </FormGroup>
           </FormGroup>
-          <Button bsStyle='primary' onClick={this.addPart}>ajouter</Button>
+          <Button bsStyle='primary' onClick={this.addPart.bind(this)}>ajouter</Button>
         </Form>
       </div>
     )
