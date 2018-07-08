@@ -10,13 +10,13 @@ class FindPart extends Component {
 
   render() {
     return  (
-      <div>
+      <div className='container'>
         <Form inline>
           <FormGroup>
-            <ControlLabel>pièce à rechercher</ControlLabel>{' '}
+            <ControlLabel>pièce à rechercher</ControlLabel>
             <FormControl type="text" placeholder="# de série" />
-            <Button bsStyle='primary' onClick={this.getPartHistory}>rechercher</Button>
           </FormGroup>
+            <Button bsStyle='primary' onClick={this.getPartHistory}>rechercher</Button>
         </Form>
       </div>
     )

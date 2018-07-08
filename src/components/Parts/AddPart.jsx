@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, FormGroup, ControlLabel, FormControl, Select} from 'react-bootstrap'
+import {Form, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap'
 import axios from 'axios'
 
 
@@ -14,10 +14,9 @@ class AddPart extends Component {
   }
 
   handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
     // selectedOption can be null when the `x` (close) button is clicked
     if (selectedOption) {
-      console.log(`Selected: ${selectedOption.label}`);
+      this.setState({ selectedOption:  selectedOption.target.value });
     }
   }
 
@@ -25,28 +24,36 @@ class AddPart extends Component {
     let partModels = [];
     axios.get('/parts').then((response) => {
       partModels = response.data.partModels;
-      this.setState({options: partModels});
+      this.setState({
+        options: partModels,
+        selectedOption: partModels[0].name
+      });
     });
+  }
+
+  addPart() {
+    console.log('posting to parts/add');
   }
 
   render() {
     return  (
-      <div>
+      <div className='container'>
         <Form inline>
           <FormGroup>
-            <ControlLabel># de série</ControlLabel>{' '}
-            <FormControl type="text" placeholder="" />
-          </FormGroup>
-          <FormGroup>
-            <ControlLabel>modèle</ControlLabel>{' '}
-            <FormControl componentClass="select" placeholder="select">
+            <ControlLabel>modèle : </ControlLabel>{' '}
+            <FormControl componentClass="select" onChange={this.handleChange.bind(this)} placeholder="select">
             {
               this.state.options.map((option, index) => {
                   return (<option key={index} value={option.name}>{option.name}</option>)
               })
             }
             </FormControl>
+          <FormGroup>
+            <ControlLabel># de série :</ControlLabel>{' '}
+            <FormControl type="text" placeholder="" value={this.state.selectedOption} />
           </FormGroup>
+          </FormGroup>
+          <Button bsStyle='primary' onClick={this.addPart}>ajouter</Button>
         </Form>
       </div>
     )
