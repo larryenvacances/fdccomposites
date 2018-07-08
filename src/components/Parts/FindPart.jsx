@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Form, FormGroup, ControlLabel, FormControl, Select, Button} from 'react-bootstrap'
 // TODO - add proptypes
 
 
@@ -10,8 +11,13 @@ class FindPart extends Component {
   render() {
     return  (
       <div>
-        <input type='text' name='partName' />
-        <button title='rechercher' name='rechercher' onClick={this.getPartHistory}>rechercher</button>
+        <Form inline>
+          <FormGroup>
+            <ControlLabel>pièce à rechercher</ControlLabel>{' '}
+            <FormControl type="text" placeholder="# de série" />
+            <Button bsStyle='primary' onClick={this.getPartHistory}>rechercher</Button>
+          </FormGroup>
+        </Form>
       </div>
     )
   }

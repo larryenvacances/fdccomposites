@@ -9,7 +9,8 @@ const userSchema = new Schema({
 	lastName: { type: String, unique: false },
 	local: {
 		username: { type: String, unique: false, required: false },
-		password: { type: String, unique: false, required: false }
+    password: { type: String, unique: false, required: false },
+    isAdmin: { type: Boolean, unique: false, required: true }
 	},
 	photos: []
 })
