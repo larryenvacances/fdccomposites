@@ -5,6 +5,7 @@ import './App.css'
 import LoginForm from './components/Login/LoginForm'
 import Header from './components/Header'
 import Home from './components/Home'
+import FindPart from './components/Parts/FindPart';
 
 const DisplayLinks = props => {
 	if (props.loggedIn) {
@@ -14,6 +15,11 @@ const DisplayLinks = props => {
 					<li className="nav-item">
 						<Link to="/" className="nav-link">
 							Home
+						</Link>
+					</li>
+					<li className="nav-item">
+						<Link to="/findpart" className="nav-link">
+							Trouver une pièce
 						</Link>
 					</li>
 					<li>
@@ -114,6 +120,7 @@ class App extends Component {
 				{/*  ROUTES */}
 				{/* <Route exact path="/" component={Home} /> */}
 				<Route exact path="/" render={() => <Home user={this.state.user} />} />
+        <Route exact path="/findpart" render={() => <FindPart />} />
 				<Route
 					exact
 					path="/login"
