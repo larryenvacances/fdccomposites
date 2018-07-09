@@ -42,8 +42,8 @@ class AddPart extends Component {
           alert('La pièce ' + this.state.model + '-' + this.state.serialNumber + ' a été ajoutée avec succès')
       })
       .catch(function (response) {
-          //handle error
-          console.log(response);
+        console.log(response);
+          alert(response)
       });
   }
 
