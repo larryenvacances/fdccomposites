@@ -36,6 +36,17 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session()) // will call the deserializeUser
 
+
+// ==== if its production environment!
+if (process.env.NODE_ENV === 'production') {
+	const path = require('path')
+	console.log('YOU ARE IN THE PRODUCTION ENV')
+	app.use('/static', express.static(path.join(__dirname, '../build/static')))
+	app.get('/', (req, res) => {
+		res.sendFile(path.join(__dirname, '../build/'))
+	})
+}
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* Express app ROUTING */
