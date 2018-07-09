@@ -9,15 +9,20 @@ class AddPart extends Component {
 
     this.state = {
       options: [],
-      partFullName: ''
+      model: '',
+      serialNumber: ''
     }
   }
 
-  handleChange = (partFullName) => {
-    // partFullName can be null when the `x` (close) button is clicked
-    if (partFullName) {
-      this.setState({ partFullName:  partFullName.target.value });
+  handleChange = (model) => {
+    // model can be null when the `x` (close) button is clicked
+    if (model) {
+      this.setState({ model:  model.target.value });
     }
+  }
+
+  handleInput = (serialNumber) => {
+    this.setState({ serialNumber: serialNumber.target.value })
   }
 
   componentDidMount () {
@@ -26,16 +31,15 @@ class AddPart extends Component {
       partModels = response.data.partModels;
       this.setState({
         options: partModels,
-        partFullName: partModels[0].name
+        model: partModels[0].name
       });
     });
   }
 
   addPart() {
-    axios.post('/parts/add?partModelName=' + this.state.partFullName)
-      .then(function (response) {
-          //handle success
-          console.log(response);
+    axios.post('/parts/add?model=' + this.state.model + '&serialNumber=' + this.state.serialNumber)
+      .then((response) => {
+          alert('La pièce ' + this.state.model + '-' + this.state.serialNumber + ' a été ajoutée avec succès')
       })
       .catch(function (response) {
           //handle error
@@ -56,10 +60,8 @@ class AddPart extends Component {
               })
             }
             </FormControl>
-          <FormGroup>
             <ControlLabel># de série :</ControlLabel>{' '}
-            <FormControl type="text" placeholder="" value={this.state.partFullName} />
-          </FormGroup>
+            <FormControl type="text" placeholder="" onInput={this.handleInput.bind(this)} value={this.state.serialNumber} />
           </FormGroup>
           <Button bsStyle='primary' onClick={this.addPart.bind(this)}>ajouter</Button>
         </Form>

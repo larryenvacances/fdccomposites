@@ -18,9 +18,15 @@ router.get('/', (req, res, next) => {
 router.post('/add', (req, res, next) => {
   if (req.user) {
     console.log('===== parts/add!!======');
+    let fullName = req.query.model + '-' + req.query.serialNumber;
     Part.insertMany([{
-      partModelName: req.query.partModelName
+      model: req.query.model,
+      serialNumber: req.query.serialNumber,
+      fullName: fullName
     }])
+    .then(
+      res.send(200)
+    )
 	} else {
 		res.send(401, 'not logged in');
 	}
