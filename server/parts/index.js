@@ -27,6 +27,27 @@ router.get('/', (req, res, next) => {
 	}
 })
 
+router.post('/edit', (req, res, next) => {
+  console.log('===== parts/edit!!======');
+  if (req.user) {
+    let fullName = req.query.fullName;
+    let stage = req.query.stage;
+    Part.findOne({fullName: fullName}, (err, part) => {
+      if (err) res.send(500);
+      
+      part.lastModifiedBy = req.user.local.username;
+      part.lastModifiedOn = Date.now();
+      part.stage = stage;
+      part.save((err, updatedPart) => {
+        if (err) res.send(500);
+        res.send(200);
+      });
+    });
+	} else {
+		res.send(401, 'not logged in');
+	}
+})
+
 router.post('/add', (req, res, next) => {
   console.log('===== parts/add!!======');
   if (req.user) {

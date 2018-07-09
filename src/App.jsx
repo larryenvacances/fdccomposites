@@ -7,6 +7,7 @@ import Header from './components/Header'
 import Home from './components/Home'
 import FindPart from './components/Parts/FindPart';
 import AddPart from './components/Parts/AddPart';
+import EditPart from './components/Parts/EditPart';
 
 const DisplayLinks = props => {
 	if (props.loggedIn && props.isAdmin) {
@@ -26,6 +27,11 @@ const DisplayLinks = props => {
 					<li className="nav-item">
 						<Link to="/addpart" className="nav-link">
 							Ajouter une pièce
+						</Link>
+					</li>
+					<li className="nav-item">
+						<Link to="/editpart" className="nav-link">
+							Modifier une pièce
 						</Link>
 					</li>
 					<li>
@@ -157,6 +163,7 @@ class App extends Component {
 				<Route exact path="/" render={() => <Home user={this.state.user} />} />
         <Route exact path="/findpart" render={() => <FindPart />} />
         <Route exact path="/addpart" render={() => <AddPart />} />
+        <Route exact path="/editpart" render={() => <EditPart />} />
 				<Route
 					exact
 					path="/login"
