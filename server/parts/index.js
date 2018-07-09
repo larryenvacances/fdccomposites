@@ -6,7 +6,8 @@ const Part = require('../db/models/part')
 router.get('/history', (req, res, next) => {
 	console.log('===== parts/history!!======')
   if (req.user) {
-    PartModel.find({fullName: req.query.fullName}).exec().then((part => {
+    Part.find({fullName: req.query.fullName}).select({_id: 0, __v: 0}).exec().then((part => {
+      console.log(req.query.fullName)
       res.json({ part: part });
     }));
 	} else {
@@ -33,7 +34,10 @@ router.post('/add', (req, res, next) => {
     let part = new Part({
       model: req.query.model,
       serialNumber: req.query.serialNumber,
-      fullName: fullName
+      fullName: fullName,
+      lastModifiedBy: req.user.local.username,
+      lastModifiedDate: Date.now(),
+      stage: 'Préparation Tissus & Core'
     });
     
     part.save((err) => {
