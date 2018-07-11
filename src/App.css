@@ -22,3 +22,12 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.selected {
+  background-color: rgb(95, 167, 255);
+  color: #ffffff;
+}
+
+.selected:hover {
+  color: #ffffff;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, NavLink } from 'react-router-dom'
 import './App.css'
 import LoginForm from './components/Login/LoginForm'
 import Header from './components/Header'
@@ -15,29 +15,29 @@ const DisplayLinks = props => {
 			<nav className="navbar">
 				<ul className="nav">
 					<li className="nav-item">
-						<Link to="/" className="nav-link">
+						<NavLink to="/" className="nav-link">
 							Home
-						</Link>
+						</NavLink>
 					</li>
 					<li className="nav-item">
-						<Link to="/findpart" className="nav-link">
+						<NavLink to="/findpart" className="nav-link" activeClassName="selected">
 							Trouver une pièce
-						</Link>
+						</NavLink>
 					</li>
 					<li className="nav-item">
-						<Link to="/addpart" className="nav-link">
+						<NavLink to="/addpart" className="nav-link" activeClassName="selected">
 							Ajouter une pièce
-						</Link>
+						</NavLink>
 					</li>
 					<li className="nav-item">
-						<Link to="/editpart" className="nav-link">
+						<NavLink to="/editpart" className="nav-link" activeClassName="selected">
 							Modifier une pièce
-						</Link>
+						</NavLink>
 					</li>
 					<li>
-						<Link to="#" className="nav-link" onClick={props._logout}>
+						<NavLink to="#" className="nav-link" onClick={props._logout} activeClassName="selected">
 							Logout
-						</Link>
+						</NavLink>
 					</li>
 				</ul>
 			</nav>
@@ -47,14 +47,14 @@ const DisplayLinks = props => {
 			<nav className="navbar">
 				<ul className="nav">
 					<li className="nav-item">
-						<Link to="/" className="nav-link">
+						<NavLink to="/" className="nav-link">
 							Home
-						</Link>
+						</NavLink>
 					</li>
 					<li>
-						<Link to="#" className="nav-link" onClick={props._logout}>
+						<NavLink to="#" className="nav-link" onClick={props._logout} activeClassName="selected">
 							Logout
-						</Link>
+						</NavLink>
 					</li>
 				</ul>
 			</nav>
@@ -64,14 +64,14 @@ const DisplayLinks = props => {
 			<nav className="navbar">
 				<ul className="nav">
 					<li className="nav-item">
-						<Link to="/" className="nav-link">
+						<NavLink to="/" className="nav-link">
 							Home
-						</Link>
+						</NavLink>
 					</li>
 					<li className="nav-item">
-						<Link to="/login" className="nav-link">
+						<NavLink to="/login" className="nav-link" activeClassName="selected">
 							login
-						</Link>
+						</NavLink>
 					</li>
 				</ul>
 			</nav>
