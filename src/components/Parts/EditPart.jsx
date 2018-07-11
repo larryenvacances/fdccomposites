@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap'
-import ReactJson from 'react-json-view';
 import axios from 'axios'
 // TODO - add proptypes
 
@@ -65,7 +64,7 @@ class EditPart extends Component {
             }
             </Input>
           </FormGroup>
-          <Button bsStyle='primary' onClick={this.editPart.bind(this)}>modifier</Button>
+          <Button onClick={this.editPart.bind(this)}>modifier</Button>
         </Form>
       </div>
     )

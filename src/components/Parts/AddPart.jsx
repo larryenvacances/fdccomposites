@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, FormGroup, Input, Label, Button, Col} from 'reactstrap'
+import {Form, FormGroup, Input, Label, Button} from 'reactstrap'
 import axios from 'axios'
 
 
@@ -63,7 +63,7 @@ class AddPart extends Component {
             <Label className="mr-sm-2"># de série :</Label>
             <Input type="text" placeholder="" onInput={this.handleInput.bind(this)} value={this.state.serialNumber} />
           </FormGroup>
-          <Button bsStyle='primary' onClick={this.addPart.bind(this)}>ajouter</Button>
+          <Button onClick={this.addPart.bind(this)}>ajouter</Button>
         </Form>
       </div>
     )

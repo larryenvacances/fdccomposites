@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Route, Link, NavLink } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 import './App.css'
 import LoginForm from './components/Login/LoginForm'
 import Header from './components/Header'
@@ -154,24 +154,30 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				<h1>FDC Composites</h1>
-				<Header user={this.state.user} />
-				{/* LINKS to our different 'pages' */}
-				<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} isAdmin={this.state.user.local.isAdmin}/>
-				{/*  ROUTES */}
-				{/* <Route exact path="/" component={Home} /> */}
-				<Route exact path="/" render={() => <Home user={this.state.user} />} />
-        <Route exact path="/findpart" render={() => <FindPart />} />
-        <Route exact path="/addpart" render={() => <AddPart />} />
-        <Route exact path="/editpart" render={() => <EditPart />} />
-				<Route
-					exact
-					path="/login"
-					render={() =>
-						<LoginForm
-							_login={this._login}
-						/>}
-				/>
+        <div className='row'>
+          <img src={'http://www.fdccomposites.com/wp-content/uploads/logo-fdc-2018.jpg'} alt={'did not load properly'}></img>
+        </div>
+        <div className='row'>
+          <Header user={this.state.user}  className='header'/>
+        </div>
+        <div>
+          {/* LINKS to our different 'pages' */}
+          <DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} isAdmin={this.state.user.local.isAdmin}/>
+          {/*  ROUTES */}
+          {/* <Route exact path="/" component={Home} /> */}
+          <Route exact path="/" render={() => <Home user={this.state.user} />} />
+          <Route exact path="/findpart" render={() => <FindPart />} />
+          <Route exact path="/addpart" render={() => <AddPart />} />
+          <Route exact path="/editpart" render={() => <EditPart />} />
+          <Route
+            exact
+            path="/login"
+            render={() =>
+              <LoginForm
+                _login={this._login}
+              />}
+          />
+        </div>
 			</div>
 		)
 	}

@@ -34,7 +34,7 @@ class FindPart extends Component {
               <Label className="mr-sm-2">pièce à rechercher :</Label>
               <Input className="mr-sm-2" type="text" placeholder="# de série" value={this.state.serialNumber} onInput={this.handleInput} />
             </FormGroup>
-              <Button bsStyle='primary' onClick={this.getPartHistory.bind(this)}>rechercher</Button>
+              <Button onClick={this.getPartHistory.bind(this)}>rechercher</Button>
           </Form>
           <div style={{textAlign: 'left'}}>
             <ReactJson displayDataTypes={false} src={this.state.part} />

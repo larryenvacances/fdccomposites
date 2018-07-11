@@ -31,3 +31,21 @@
 .selected:hover {
   color: #ffffff;
 }
+
+.image {
+  display: block;
+}
+
+.row {
+  padding-left: 30px;
+  padding-top: 10px;
+}
+
+.header {
+  text-align: right;
+  float: right;
+}
+
+img {
+  float: left;
+}
