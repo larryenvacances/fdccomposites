@@ -35,6 +35,12 @@ router.post('/edit', (req, res, next) => {
     Part.findOne({fullName: fullName}, (err, part) => {
       if (err) res.send(500);
       
+      if (part.history === undefined || part.history.length == 0) {
+        part.history.push({lastModifiedBy: part.lastModifiedBy, lastModifiedOn: part.lastModifiedOn, stage: part.stage});
+      }
+
+      part.history.unshift[{lastModifiedBy: part.lastModifiedBy, lastModifiedOn: part.lastModifiedOn, stage: part.stage}];
+
       part.lastModifiedBy = req.user.local.username;
       part.lastModifiedOn = Date.now();
       part.stage = stage;

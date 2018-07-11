@@ -9,7 +9,14 @@ const partSchema = new Schema({
   processStep: { type: String, unique: false },
   stage: { type: String, unique: false },
   lastModifiedBy: { type: String, unique: false },
-  lastModifiedDate: { type: Date, unique: false }
+  lastModifiedDate: { type: Date, unique: false },
+  history: [
+    {
+      stage: { type: String, unique: false },
+      lastModifiedBy: { type: String, unique: false },
+      lastModifiedDate: { type: Date, unique: false },
+    }
+  ]
 })
 
 // Create reference to User & export
