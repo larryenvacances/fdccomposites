@@ -37,7 +37,7 @@ class FindPart extends Component {
               <Button bsStyle='primary' onClick={this.getPartHistory.bind(this)}>rechercher</Button>
           </Form>
           <div style={{textAlign: 'left'}}>
-            <ReactJson src={this.state.part} />
+            <ReactJson displayDataTypes={false} src={this.state.part} />
           </div>
         </div>
       </div>

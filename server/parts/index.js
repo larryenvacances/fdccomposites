@@ -6,7 +6,7 @@ const Part = require('../db/models/part')
 router.get('/history', (req, res, next) => {
 	console.log('===== parts/history!!======')
   if (req.user) {
-    Part.find({fullName: req.query.fullName}).select({_id: 0, __v: 0}).exec().then((part => {
+    Part.find({fullName: req.query.fullName}).select({_id: 0, __v: 0, 'history._id': 0}).exec().then((part => {
       console.log(req.query.fullName)
       res.json({ part: part });
     }));
@@ -36,14 +36,18 @@ router.post('/edit', (req, res, next) => {
       if (err) res.send(500);
       
       if (part.history === undefined || part.history.length == 0) {
-        part.history.push({lastModifiedBy: part.lastModifiedBy, lastModifiedOn: part.lastModifiedOn, stage: part.stage});
+        console.log('===============PUSH==================')
+        part.history.push({lastModifiedBy: part.lastModifiedBy, lastModifiedDate: part.lastModifiedDate, stage: part.stage});
+      }
+      else {
+        console.log('===============UNSHIFT==================')
+        part.history.unshift({lastModifiedBy: part.lastModifiedBy, lastModifiedDate: part.lastModifiedDate, stage: part.stage});
       }
 
-      part.history.unshift[{lastModifiedBy: part.lastModifiedBy, lastModifiedOn: part.lastModifiedOn, stage: part.stage}];
-
       part.lastModifiedBy = req.user.local.username;
-      part.lastModifiedOn = Date.now();
+      part.lastModifiedDate = Date.now();
       part.stage = stage;
+      part.markModified('history');
       part.save((err, updatedPart) => {
         if (err) res.send(500);
         res.send(200);

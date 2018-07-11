@@ -1,6 +1,12 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+var childSchema = new Schema({
+  stage: { type: String, unique: false },
+  lastModifiedBy: { type: String, unique: false },
+  lastModifiedDate: { type: Date, unique: false },
+});
+
 // Define partSchema
 const partSchema = new Schema({
   serialNumber: { type: String, unique: false },
@@ -11,11 +17,7 @@ const partSchema = new Schema({
   lastModifiedBy: { type: String, unique: false },
   lastModifiedDate: { type: Date, unique: false },
   history: [
-    {
-      stage: { type: String, unique: false },
-      lastModifiedBy: { type: String, unique: false },
-      lastModifiedDate: { type: Date, unique: false },
-    }
+    childSchema
   ]
 })
 
