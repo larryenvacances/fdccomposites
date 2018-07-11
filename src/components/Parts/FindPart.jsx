@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, FormGroup, ControlLabel, FormControl, Select, Button} from 'react-bootstrap'
+import {Form, FormGroup, Label, Input, Button} from 'reactstrap'
 import ReactJson from 'react-json-view';
 import axios from 'axios'
 // TODO - add proptypes
@@ -31,8 +31,8 @@ class FindPart extends Component {
         <div className='container'>
           <Form inline>
             <FormGroup>
-              <ControlLabel>pièce à rechercher</ControlLabel>
-              <FormControl type="text" placeholder="# de série" value={this.state.serialNumber} onInput={this.handleInput} />
+              <Label className="mr-sm-2">pièce à rechercher :</Label>
+              <Input className="mr-sm-2" type="text" placeholder="# de série" value={this.state.serialNumber} onInput={this.handleInput} />
             </FormGroup>
               <Button bsStyle='primary' onClick={this.getPartHistory.bind(this)}>rechercher</Button>
           </Form>

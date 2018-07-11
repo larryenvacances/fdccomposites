@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap'
+import {Form, FormGroup, Input, Label, Button, Col} from 'reactstrap'
 import axios from 'axios'
 
 
@@ -51,17 +51,17 @@ class AddPart extends Component {
     return  (
       <div className='container'>
         <Form inline>
-          <FormGroup>
-            <ControlLabel>modèle : </ControlLabel>{' '}
-            <FormControl componentClass="select" onChange={this.handleChange.bind(this)} placeholder="select">
+          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <Label className="mr-sm-2">modèle : </Label>
+            <Input  className="mr-sm-4" type="select" onChange={this.handleChange.bind(this)} placeholder="select">
             {
               this.state.options.map((option, index) => {
                   return (<option key={index} value={option.name}>{option.name}</option>)
               })
             }
-            </FormControl>
-            <ControlLabel># de série :</ControlLabel>{' '}
-            <FormControl type="text" placeholder="" onInput={this.handleInput.bind(this)} value={this.state.serialNumber} />
+            </Input>
+            <Label className="mr-sm-2"># de série :</Label>
+            <Input type="text" placeholder="" onInput={this.handleInput.bind(this)} value={this.state.serialNumber} />
           </FormGroup>
           <Button bsStyle='primary' onClick={this.addPart.bind(this)}>ajouter</Button>
         </Form>

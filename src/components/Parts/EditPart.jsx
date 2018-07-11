@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, FormGroup, ControlLabel, FormControl, Select, Button} from 'react-bootstrap'
+import {Form, FormGroup, Label, Input, Button} from 'reactstrap'
 import ReactJson from 'react-json-view';
 import axios from 'axios'
 // TODO - add proptypes
@@ -53,17 +53,17 @@ class EditPart extends Component {
     return  (
       <div className='container'>
         <Form inline>
-          <FormGroup>
-            <ControlLabel># de série :</ControlLabel>{' '}
-            <FormControl type="text" placeholder="" onInput={this.handleInput.bind(this)} value={this.state.serialNumber} />
-            <ControlLabel>stage : </ControlLabel>{' '}
-            <FormControl componentClass="select" onChange={this.handleChange.bind(this)} placeholder="select">
+          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <Label className="mr-sm-2"># de série :</Label>{' '}
+            <Input className="mr-sm-4" type="text" placeholder="" onInput={this.handleInput.bind(this)} value={this.state.serialNumber} />
+            <Label className="mr-sm-2">stage : </Label>{' '}
+            <Input type="select" onChange={this.handleChange.bind(this)} placeholder="select">
             {
               this.state.stages.map((option, index) => {
                   return (<option key={index} value={option.name}>{option.name}</option>)
               })
             }
-            </FormControl>
+            </Input>
           </FormGroup>
           <Button bsStyle='primary' onClick={this.editPart.bind(this)}>modifier</Button>
         </Form>
