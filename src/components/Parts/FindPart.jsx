@@ -44,7 +44,10 @@ class FindPart extends Component {
     // model can be null when the `x` (close) button is clicked
     if (model) {
       axios.get('/parts/serialNumbersForModel?model=' + model.target.value).then((response) => {
-        this.setState({serialNumberOptions: response.data})
+        this.setState({
+          serialNumberOptions: response.data,
+          serialNumber: response.data[0].serialNumber
+        })
       });
       this.setState({ model:  model.target.value });
     }
