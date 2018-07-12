@@ -11,7 +11,10 @@ class EditPart extends Component {
     this.state = {
       stages: [],
       stage: '',
-      serialNumber: ''
+      serialNumber: '',
+      modelOptions: [],
+      model: '',
+      serialNumberOptions: []
     }
   }
 
@@ -24,13 +27,47 @@ class EditPart extends Component {
         stage: stages[0].name
       });
     });
+
+    axios.get('/partModels/active').then((response) => {
+      let modelOptions = [];
+      modelOptions = response.data;
+      this.setState({
+        modelOptions: modelOptions,
+        model: modelOptions[0]
+      });
+      
+      axios.get('/parts/serialNumbersForModel?model=' + modelOptions[0]).then((response) => {
+        
+        console.log(response.data[0]);
+        this.setState({
+          serialNumberOptions: response.data,
+          serialNumber: response.data[0].serialNumber
+        })
+      });
+    });
+
   }
 
-  handleInput = (serialNumber) => {
-    this.setState({ serialNumber: serialNumber.target.value })
+  handleChangeModel = (model) => {
+    // model can be null when the `x` (close) button is clicked
+    if (model) {
+      axios.get('/parts/serialNumbersForModel?model=' + model.target.value).then((response) => {
+        this.setState({
+          serialNumberOptions: response.data,
+          serialNumber: response.data[0].serialNumber
+        })
+      });
+      this.setState({ model:  model.target.value });
+    }
   }
 
-  handleChange = (stage) => {
+  handleChangeSerialNumber = (serialNumber) => {
+    if (serialNumber) {
+      this.setState({ serialNumber: serialNumber.target.value });
+    }
+  };
+
+  handleChangeStage = (stage) => {
     // model can be null when the `x` (close) button is clicked
     if (stage) {
       this.setState({ stage:  stage.target.value });
@@ -38,7 +75,7 @@ class EditPart extends Component {
   }
 
   editPart() {
-    axios.post('/parts/edit?fullName=' + this.state.serialNumber + '&stage=' + this.state.stage)
+    axios.post('/parts/edit?fullName=' + this.state.model + '-' + this.state.serialNumber + '&stage=' + this.state.stage)
       .then((response) => {
           alert('La pièce ' + this.state.model + '-' + this.state.serialNumber + ' a été modifiée avec succès')
       })
@@ -53,10 +90,30 @@ class EditPart extends Component {
       <div className='container'>
         <Form inline>
           <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-            <Label className="mr-sm-2"># de série :</Label>{' '}
-            <Input className="mr-sm-4" type="text" placeholder="" onInput={this.handleInput.bind(this)} value={this.state.serialNumber} />
+          <FormGroup>
+              <Label className="mr-sm-2">modèle à éditer :</Label>
+              <Input  className="mr-sm-4" type="select" onChange={this.handleChangeModel.bind(this)} placeholder="select">
+              {
+                this.state.modelOptions.map((option, index) => {
+                    return (<option key={index} value={option}>{option}</option>)
+                })
+              }
+              </Input>
+            </FormGroup>
+            
+            <FormGroup>
+              <Label className="mr-sm-2"># de série :</Label>
+              <Input  className="mr-sm-4" type="select" defaultValue={this.state.serialNumberOptions[0]} onChange={this.handleChangeSerialNumber.bind(this)} placeholder="select">
+              {
+                this.state.serialNumberOptions.map((option, index) => {
+                    return (<option key={index} value={option.serialNumber}>{option.serialNumber}</option>)
+                })
+              }
+              </Input>
+            </FormGroup>
+
             <Label className="mr-sm-2">stage : </Label>{' '}
-            <Input type="select" onChange={this.handleChange.bind(this)} placeholder="select">
+            <Input type="select" onChange={this.handleChangeStage.bind(this)} placeholder="select">
             {
               this.state.stages.map((option, index) => {
                   return (<option key={index} value={option.name}>{option.name}</option>)
