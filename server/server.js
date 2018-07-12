@@ -56,6 +56,8 @@ app.use('/parts', require('./parts'))
 
 app.use('/stages', require('./stages'))
 
+app.use('/partModels', require('./partModels'))
+
 // ====== Error handler ====
 app.use(function(err, req, res, next) {
 	console.log('====== ERROR =======')
