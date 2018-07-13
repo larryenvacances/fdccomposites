@@ -15,6 +15,18 @@ router.get('/history', (req, res, next) => {
 	}
 })
 
+router.get('/serialNumbersForModel', (req, res, next) => {
+	console.log('===== parts/serialNumbersForModel!!======')
+  if (req.user) {
+    Part.find({ model: req.query.model }).select('serialNumber -_id').exec().then((serialNumbers => {
+      console.log(serialNumbers);
+      res.json(serialNumbers)
+    }));
+	} else {
+		res.send(401, 'not logged in');
+	}
+})
+
 router.get('/partsForModel', (req, res, next) => {
 	console.log('===== parts/partsForModel!!======')
   if (req.user) {
