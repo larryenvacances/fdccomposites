@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap'
-import ReactJson from 'react-json-view';
 import axios from 'axios'
 // TODO - add proptypes
+
+import ReactTable from "react-table";
+import "react-table/react-table.css";
 
 
 class FindPart extends Component {
@@ -14,7 +16,7 @@ class FindPart extends Component {
       part: {},
       modelOptions: [],
       model: '',
-      serialNumberOptions: []
+      partOptions: []
     }
   }
 
@@ -26,13 +28,12 @@ class FindPart extends Component {
         modelOptions: modelOptions,
         model: modelOptions[0]
       });
+
       
-      axios.get('/parts/serialNumbersForModel?model=' + modelOptions[0]).then((response) => {
+      axios.get('/parts/partsForModel?model=' + modelOptions[0]).then((response) => {
         
-        console.log(response.data[0]);
         this.setState({
-          serialNumberOptions: response.data,
-          serialNumber: response.data[0].serialNumber
+          partOptions: response.data
         })
       });
     });
@@ -43,21 +44,15 @@ class FindPart extends Component {
   handleChangeModel = (model) => {
     // model can be null when the `x` (close) button is clicked
     if (model) {
-      axios.get('/parts/serialNumbersForModel?model=' + model.target.value).then((response) => {
+      axios.get('/parts/partsForModel?model=' + model.target.value).then((response) => {
         this.setState({
-          serialNumberOptions: response.data,
+          partOptions: response.data,
           serialNumber: response.data[0].serialNumber
         })
       });
       this.setState({ model:  model.target.value });
     }
   }
-
-  handleChangeSerialNumber = (serialNumber) => {
-    if (serialNumber) {
-      this.setState({ serialNumber: serialNumber.target.value });
-    }
-  };
 
   getPartHistory () {
     axios.get('/parts/history?fullName=' + this.state.model + '-' + this.state.serialNumber).then((response) => {
@@ -66,6 +61,8 @@ class FindPart extends Component {
   }
 
   render() {
+    const { partOptions } = this.state;
+    console.log(partOptions);
     return  (
       <div>
         <div className='container'>
@@ -80,21 +77,50 @@ class FindPart extends Component {
               }
               </Input>
             </FormGroup>
-            
-            <FormGroup>
-              <Label className="mr-sm-2"># de série :</Label>
-              <Input  className="mr-sm-4" type="select" defaultValue={this.state.serialNumberOptions[0]} onChange={this.handleChangeSerialNumber.bind(this)} placeholder="select">
-              {
-                this.state.serialNumberOptions.map((option, index) => {
-                    return (<option key={index} value={option.serialNumber}>{option.serialNumber}</option>)
-                })
-              }
-              </Input>
-            </FormGroup>
-            <Button onClick={this.getPartHistory.bind(this)}>rechercher</Button>
           </Form>
           <div style={{textAlign: 'left'}}>
-            <ReactJson displayDataTypes={false} src={this.state.part} />
+            <ReactTable 
+              data={partOptions}
+              columns={[
+                {
+                  Header: '# de série',
+                  accessor: 'serialNumber'
+                },
+                {
+                  Header: 'étape de production',
+                  accessor: 'stage'
+                },
+                {
+                  Header: 'dernière modification',
+                  accessor: 'lastModifiedDate'
+                }
+              ]}
+              defaultPageSize={5}
+              SubComponent={ row => {
+                return (
+                  <div style={{ padding: '20px' }}>
+                  <ReactTable 
+                    data={partOptions[row.index].history}
+                    columns={[
+                      {
+                        Header: 'étape de production',
+                        accessor: 'stage'
+                      },
+                      {
+                        Header: 'utilisateur ayant effectué le changement',
+                        accessor: 'lastModifiedBy'
+                      },
+                      {
+                        Header: "date d'arrivée",
+                        accessor: 'lastModifiedDate'
+                      }
+                    ]}
+                    defaultPageSize={5}
+                  />
+                  </div>
+                )
+              }}
+            />
           </div>
         </div>
       </div>
