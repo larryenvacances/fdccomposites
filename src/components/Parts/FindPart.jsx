@@ -91,6 +91,11 @@ class FindPart extends Component {
                   accessor: 'stage'
                 },
                 {
+                  Header: 'rework',
+                  id: 'rework',
+                  accessor: p => p.isRework.toString()
+                },
+                {
                   Header: 'dernière modification',
                   accessor: 'lastModifiedDate'
                 }
@@ -105,6 +110,11 @@ class FindPart extends Component {
                       {
                         Header: 'étape de production',
                         accessor: 'stage'
+                      },
+                      {
+                        Header: 'rework',
+                        id: 'historyRework',
+                        accessor: p => p.isRework.toString()
                       },
                       {
                         Header: 'utilisateur ayant effectué le changement',

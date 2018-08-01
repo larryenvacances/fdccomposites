@@ -55,21 +55,23 @@ router.post('/edit', (req, res, next) => {
   if (req.user) {
     let fullName = req.query.fullName;
     let stage = req.query.stage;
+    let rework = req.query.rework;
     Part.findOne({fullName: fullName}, (err, part) => {
       if (err) res.send(500);
       
       if (part.history === undefined || part.history.length == 0) {
         console.log('===============PUSH==================')
-        part.history.push({lastModifiedBy: part.lastModifiedBy, lastModifiedDate: part.lastModifiedDate, stage: part.stage});
+        part.history.push({lastModifiedBy: part.lastModifiedBy, lastModifiedDate: part.lastModifiedDate, stage: part.stage, isRework: part.isRework });
       }
       else {
         console.log('===============UNSHIFT==================')
-        part.history.unshift({lastModifiedBy: part.lastModifiedBy, lastModifiedDate: part.lastModifiedDate, stage: part.stage});
+        part.history.unshift({lastModifiedBy: part.lastModifiedBy, lastModifiedDate: part.lastModifiedDate, stage: part.stage, isRework: part.isRework});
       }
 
       part.lastModifiedBy = req.user.local.username;
       part.lastModifiedDate = Date.now();
       part.stage = stage;
+      part.isRework = rework;
       part.markModified('history');
       part.save((err, updatedPart) => {
         if (err) res.send(500);

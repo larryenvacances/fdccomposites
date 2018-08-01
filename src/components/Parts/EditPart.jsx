@@ -14,7 +14,8 @@ class EditPart extends Component {
       serialNumber: '',
       modelOptions: [],
       model: '',
-      serialNumberOptions: []
+      serialNumberOptions: [],
+      rework: false
     }
   }
 
@@ -74,8 +75,12 @@ class EditPart extends Component {
     }
   }
 
+  handleChangeRework = () => {
+    this.setState({ rework: !this.state.rework })
+  }
+
   editPart() {
-    axios.post('/parts/edit?fullName=' + this.state.model + '-' + this.state.serialNumber + '&stage=' + this.state.stage)
+    axios.post('/parts/edit?fullName=' + this.state.model + '-' + this.state.serialNumber + '&stage=' + this.state.stage + '&rework=' + this.state.rework)
       .then((response) => {
           alert('La pièce ' + this.state.model + '-' + this.state.serialNumber + ' a été modifiée avec succès')
       })
@@ -90,9 +95,9 @@ class EditPart extends Component {
       <div className='container'>
         <Form inline>
           <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <FormGroup>
+            <FormGroup>
               <Label className="mr-sm-2">modèle à éditer :</Label>
-              <Input  className="mr-sm-4" type="select" onChange={this.handleChangeModel.bind(this)} placeholder="select">
+              <Input className="mr-sm-4" type="select" onChange={this.handleChangeModel.bind(this)} placeholder="select">
               {
                 this.state.modelOptions.map((option, index) => {
                     return (<option key={index} value={option}>{option}</option>)
@@ -103,7 +108,7 @@ class EditPart extends Component {
             
             <FormGroup>
               <Label className="mr-sm-2"># de série :</Label>
-              <Input  className="mr-sm-4" type="select" defaultValue={this.state.serialNumberOptions[0]} onChange={this.handleChangeSerialNumber.bind(this)} placeholder="select">
+              <Input className="mr-sm-4" type="select" defaultValue={this.state.serialNumberOptions[0]} onChange={this.handleChangeSerialNumber.bind(this)} placeholder="select">
               {
                 this.state.serialNumberOptions.map((option, index) => {
                     return (<option key={index} value={option.serialNumber}>{option.serialNumber}</option>)
@@ -111,15 +116,20 @@ class EditPart extends Component {
               }
               </Input>
             </FormGroup>
-
+            <FormGroup>
             <Label className="mr-sm-2">stage : </Label>{' '}
-            <Input type="select" onChange={this.handleChangeStage.bind(this)} placeholder="select">
-            {
-              this.state.stages.map((option, index) => {
-                  return (<option key={index} value={option.name}>{option.name}</option>)
-              })
-            }
-            </Input>
+              <Input className="mr-sm-4" type="select" onChange={this.handleChangeStage.bind(this)} placeholder="select">
+              {
+                this.state.stages.map((option, index) => {
+                    return (<option key={index} value={option.name}>{option.name}</option>)
+                })
+              }
+              </Input>
+            </FormGroup>
+            <Label check>
+            <Input onChange={this.handleChangeRework.bind(this)} type="checkbox" />{' '}
+              rework
+            </Label>
           </FormGroup>
           <Button onClick={this.editPart.bind(this)}>modifier</Button>
         </Form>

@@ -10,9 +10,11 @@ const partSchema = new Schema({
   stage: { type: String, unique: false },
   lastModifiedBy: { type: String, unique: false },
   lastModifiedDate: { type: Date, unique: false },
+  isRework: { type: Boolean, unique: false, default: false },
   history: [
     {
       stage: { type: String, unique: false },
+      isRework: { type: Boolean, unique: false, default: false },
       lastModifiedBy: { type: String, unique: false },
       lastModifiedDate: { type: Date, unique: false },
     }
