@@ -97,7 +97,8 @@ class FindPart extends Component {
                 },
                 {
                   Header: 'dernière modification',
-                  accessor: 'lastModifiedDate'
+                  id: 'lastModifiedDate',
+                  accessor: p => { return new Date(p.lastModifiedDate).toLocaleString() }
                 }
               ]}
               defaultPageSize={5}
@@ -122,7 +123,8 @@ class FindPart extends Component {
                       },
                       {
                         Header: "date d'arrivée",
-                        accessor: 'lastModifiedDate'
+                        id: 'historyLastModifiedDate',
+                        accessor: p => { return new Date(p.lastModifiedDate).toLocaleString() }
                       }
                     ]}
                     defaultPageSize={5}
