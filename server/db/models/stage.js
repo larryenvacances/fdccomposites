@@ -3,7 +3,8 @@ const Schema = mongoose.Schema
 
 // Define stageSchema
 const stageSchema = new Schema({
-  name: { type: String, unique: true }
+  name: { type: String, unique: true },
+  order: { type: Number, unique: true }
 })
 
 // Create reference to User & export
