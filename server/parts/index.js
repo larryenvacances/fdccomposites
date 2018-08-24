@@ -30,7 +30,7 @@ router.get('/serialNumbersForModel', (req, res, next) => {
 router.get('/partsForModel', (req, res, next) => {
 	console.log('===== parts/partsForModel!!======')
   if (req.user) {
-    Part.find({ model: req.query.model }).select().exec().then((serialNumbers => {
+    Part.find({ model: req.query.model }).where('stage').ne('Archive').select().exec().then((serialNumbers => {
       console.log(serialNumbers);
       res.json(serialNumbers)
     }));
