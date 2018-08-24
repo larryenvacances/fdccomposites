@@ -141,8 +141,8 @@ class EditPart extends Component {
               rework
             </Label>
           </FormGroup>
-          <Button onClick={this.editPart.bind(this)}>modifier</Button>
-          <Button onClick={this.deletePart.bind(this)}>supprimer</Button>
+          <Button className="mr-sm-2" onClick={this.editPart.bind(this)}>modifier</Button>
+          <Button className="btn-danger" onClick={this.deletePart.bind(this)}>supprimer</Button>
         </Form>
       </div>
     )
