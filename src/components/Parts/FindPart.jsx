@@ -91,8 +91,14 @@ class FindPart extends Component {
                   accessor: 'stage'
                 },
                 {
+                  Header: 'rework',
+                  id: 'rework',
+                  accessor: p => p.isRework.toString()
+                },
+                {
                   Header: 'dernière modification',
-                  accessor: 'lastModifiedDate'
+                  id: 'lastModifiedDate',
+                  accessor: p => { return new Date(p.lastModifiedDate).toLocaleString() }
                 }
               ]}
               defaultPageSize={5}
@@ -107,12 +113,18 @@ class FindPart extends Component {
                         accessor: 'stage'
                       },
                       {
+                        Header: 'rework',
+                        id: 'historyRework',
+                        accessor: p => p.isRework.toString()
+                      },
+                      {
                         Header: 'utilisateur ayant effectué le changement',
                         accessor: 'lastModifiedBy'
                       },
                       {
                         Header: "date d'arrivée",
-                        accessor: 'lastModifiedDate'
+                        id: 'historyLastModifiedDate',
+                        accessor: p => { return new Date(p.lastModifiedDate).toLocaleString() }
                       }
                     ]}
                     defaultPageSize={5}
