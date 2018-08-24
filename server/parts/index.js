@@ -50,6 +50,18 @@ router.get('/', (req, res, next) => {
 	}
 })
 
+router.delete('/', (req, res, next) => {
+  console.log('===== delete!!======');
+  if (req.user) {
+    let fullName = req.query.fullName;
+    Part.findOne({fullName: fullName}).remove().exec().then((err => {
+      res.send(202);
+    }));
+  } else {
+    res.send(401, 'not logged in');
+  }
+});
+
 router.post('/edit', (req, res, next) => {
   console.log('===== parts/edit!!======');
   if (req.user) {

@@ -40,10 +40,12 @@ class EditPart extends Component {
       axios.get('/parts/serialNumbersForModel?model=' + modelOptions[0]).then((response) => {
         
         console.log(response.data[0]);
-        this.setState({
-          serialNumberOptions: response.data,
-          serialNumber: response.data[0].serialNumber
-        })
+        if (response.data[0] !== undefined) {
+          this.setState({
+            serialNumberOptions: response.data,
+            serialNumber: response.data[0].serialNumber
+          })
+        }
       });
     });
 
@@ -90,6 +92,14 @@ class EditPart extends Component {
       });
   }
 
+  deletePart() {
+    if (window.confirm('Voulez-vous supprimer la pièce ' + this.state.model + '-' + this.state.serialNumber + '? Cette action est permanente.')) {
+      axios.delete('/parts?fullName=' + this.state.model + '-' + this.state.serialNumber).then((response) => {
+        alert('La pièce ' + this.state.model + '-' + this.state.serialNumber + ' a été supprimée avec succès');
+      });
+    } 
+  }
+
   render() {
     return  (
       <div className='container'>
@@ -132,6 +142,7 @@ class EditPart extends Component {
             </Label>
           </FormGroup>
           <Button onClick={this.editPart.bind(this)}>modifier</Button>
+          <Button onClick={this.deletePart.bind(this)}>supprimer</Button>
         </Form>
       </div>
     )
